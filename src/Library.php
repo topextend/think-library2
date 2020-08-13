@@ -267,25 +267,27 @@ class Library extends Service
     private function database()
     {
         $config   = Config::get('addons');
-        $database = $config['database'];
+        if (!empty($config)){
+            $database = $config['database'];
 
-        //是否使用数据库加载钩子信息
-        if (!$database) {
-            return true;
-        }
-
-        $data = Db::name($database['table'])
-            ->where('status', 1)
-            ->cache($database['cache'], $database['expire'])
-            ->field(implode(',', $database['field']))
-            ->select();
-        if (!$data->isEmpty()) {
-            foreach ($data as $key => $row) {
-                $config['hooks'] += [
-                    $row[ $database['field'][0] ] => $row[ $database['field'][1] ]
-                ];
+            //是否使用数据库加载钩子信息
+            if (!$database) {
+                return true;
             }
-            Config::set($config, 'addons');
+
+            $data = Db::name($database['table'])
+                ->where('status', 1)
+                ->cache($database['cache'], $database['expire'])
+                ->field(implode(',', $database['field']))
+                ->select();
+            if (!$data->isEmpty()) {
+                foreach ($data as $key => $row) {
+                    $config['hooks'] += [
+                        $row[ $database['field'][0] ] => $row[ $database['field'][1] ]
+                    ];
+                }
+                Config::set($config, 'addons');
+            }
         }
     }
     

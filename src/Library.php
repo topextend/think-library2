@@ -74,6 +74,8 @@ class Library extends Service
      */
     public function register()
     {
+        // 插件目录
+        define('ADDON_PATH', root_path() . 'addons' . DIRECTORY_SEPARATOR);
         // 输入默认过滤
         $this->app->request->filter(['trim']);
         // 加载中文语言
@@ -114,7 +116,7 @@ class Library extends Service
                 }
             }, 'route');
         }
-        // 定义插件目录路径
+        // 创建插件目录
         $this->addons_path = $this->getAddonsPath();
         // 数据库加载钩子
         $this->database();

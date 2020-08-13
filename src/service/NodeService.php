@@ -101,7 +101,7 @@ class NodeService extends Service
             $data = [];
         }
         $ignores = get_class_methods('\think\admin\Controller');
-        if(!is_dir(ADDON_PATH){
+        if(!is_dir(ADDON_PATH)){
             $path = $this->_scanDirectory($this->app->getBasePath());
         } else {
             $path = array_merge($this->_scanDirectory($this->app->getBasePath()),$this->_scanDirectory(ADDON_PATH));

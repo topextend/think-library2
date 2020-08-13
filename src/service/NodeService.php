@@ -101,10 +101,10 @@ class NodeService extends Service
             $data = [];
         }
         $ignores = get_class_methods('\think\admin\Controller');
-        if(!is_dir($this->app->addons->getAddonsPath())){
+        if(!is_dir(ADDON_PATH){
             $path = $this->_scanDirectory($this->app->getBasePath());
         } else {
-            $path = array_merge($this->_scanDirectory($this->app->getBasePath()),$this->_scanDirectory($this->app->addons->getAddonsPath()));
+            $path = array_merge($this->_scanDirectory($this->app->getBasePath()),$this->_scanDirectory(ADDON_PATH));
         }
         foreach ($path as $file) {
             if (preg_match("|/(\w+)/(\w+)/controller/(.+)\.php$|i", $file, $matches)) {

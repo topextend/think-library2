@@ -1,0 +1,44 @@
+{
+  "type": "library",
+  "name": "topextend/think-library",
+  "license": "MIT",
+  "description": "ThinkPHP v6.0 Library",
+  "authors": [
+    {
+      "name": "Jarmin",
+      "email": "edshop@qq.com"
+    }
+  ],
+  "require": {
+    "ext-gd": "*",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-iconv": "*",
+    "topthink/framework": "^6.0",
+    "topthink/think-view": "^1.0",
+    "topthink/think-helper": "^3.0.0"
+  },
+  "autoload": {
+    "files": [
+      "src/Common.php"
+    ],
+    "psr-4": {
+      "think\\admin\\": "src"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "think\\admin\\Library"
+      ],
+      "config":{
+          "addons": "src/config.php"
+      }
+    }
+  },
+  "scripts" : {
+      "post-install-cmd": [
+          "php think addons:config"
+      ]
+  }
+}

@@ -53,18 +53,18 @@ class Library extends Service
      */
     public function boot()
     {
-        // 绑定插件路由
-        $this->bindAddonsRoutes();
-        // 多应用中间键
-        $this->app->event->listen('HttpRun', function () {
-            $this->app->middleware->add(App::class);
-        });
         // 替换 ThinkPHP 地址处理
         $this->app->bind('think\route\Url', Url::class);
         // 替换 ThinkPHP 指令
         $this->commands(['build' => Build::class, 'clear' => Clear::class]);
         // 注册 ThinkAdmin 指令
         $this->commands([Queue::class, Install::class, Version::class, Database::class]);
+        // 绑定插件路由
+        $this->bindAddonsRoutes();
+        // 多应用中间键
+        $this->app->event->listen('HttpRun', function () {
+            $this->app->middleware->add(App::class);
+        });
         // 动态应用运行参数
         SystemService::instance()->bindRuntime();
     }
@@ -74,18 +74,6 @@ class Library extends Service
      */
     public function register()
     {
-        // 定义插件目录路径
-        $this->addons_path = $this->getAddonsPath();
-        // 数据库加载钩子
-        $this->database();
-        // 自动载入插件
-        $this->autoload();
-        // 加载插件事件
-        $this->loadEvent();
-        // 加载插件系统服务
-        $this->loadService();
-        // 绑定插件容器
-        $this->app->bind('addons', Service::class);
         // 输入默认过滤
         $this->app->request->filter(['trim']);
         // 加载中文语言
@@ -126,6 +114,18 @@ class Library extends Service
                 }
             }, 'route');
         }
+        // 定义插件目录路径
+        $this->addons_path = $this->getAddonsPath();
+        // 数据库加载钩子
+        $this->database();
+        // 自动载入插件
+        $this->autoload();
+        // 加载插件事件
+        $this->loadEvent();
+        // 加载插件系统服务
+        $this->loadService();
+        // 绑定插件容器
+        $this->app->bind('addons', Service::class);
         // 动态加入应用函数
         $SysRule = "{$this->app->getBasePath()}*/sys.php";
         foreach (glob($SysRule) as $file) includeFile($file);

@@ -144,8 +144,8 @@ class Library extends Service
             // 路由脚本
             $execute = '\\think\\admin\\addons\\Route@execute';
             // 注册插件公共中间件
-            if (is_file($this->app->addons->getAddonsPath() . 'middleware.php')) {
-                $this->app->middleware->import(include $this->app->addons->getAddonsPath() . 'middleware.php', 'route');
+            if (is_file($this->getAddonsPath() . 'middleware.php')) {
+                $this->app->middleware->import(include $this->getAddonsPath() . 'middleware.php', 'route');
             }
             // 定义插件路径            
             $addonsDir = Config::get('addons.dir', 'addons');
